@@ -1,12 +1,16 @@
 import { Formik, ErrorMessage} from 'formik';
-import { StyledForm, StyledInput, StyledButton } from './formStyled';
+import { StyledForm, StyledInput, StyledButton, ErrorMessageStyled } from './formStyled';
 import * as Yup from 'yup';
-
+import { nanoid } from 'nanoid';
 const validSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
-    .required('Required'),
+    .required('Required')
+    .matches(
+      /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
+      'Name may contain only letters, apostrophe, dash and spaces.'
+    ),
 });
 
 export const FormElement = ({ onAdd }) => {
@@ -18,12 +22,12 @@ export const FormElement = ({ onAdd }) => {
         }}
         validationSchema={validSchema}
         onSubmit={(values, actions) => {
-           onAdd(values)
+           onAdd({...values, id: nanoid()})
            actions.resetForm()
         }}
       >
         <StyledForm>
-            Phonebook
+          
           <label>
             Name
             <StyledInput
@@ -32,7 +36,7 @@ export const FormElement = ({ onAdd }) => {
               name="name"
               placeholder="Type name"
             />
-            <ErrorMessage name="name" />
+            < ErrorMessage component={ErrorMessageStyled} name="name" />
           </label>
           <StyledButton type="submit">Submit</StyledButton>
         </StyledForm>

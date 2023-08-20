@@ -4,12 +4,12 @@ import { styled } from "styled-components";
 export const StyledForm = styled(Form)`
 display: flex;
 flex-direction: column;
-gap: 20px;
+gap: 10px;
 `
 export const StyledInput = styled(Field)`
 display: flex;
 flex-direction: column;
-margin-top: 20px;
+margin-top: 5px;
 padding: 5px;
 `
 export const StyledButton = styled.button`
@@ -19,3 +19,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 `
+export const ErrorMessageStyled = styled.div`
+font-size: 15px;
+
+color:red;`
